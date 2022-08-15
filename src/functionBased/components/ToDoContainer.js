@@ -7,7 +7,13 @@ import InputToDo from "./InputToDo";
 import ToDoList from "./ToDoList";
 
 const ToDoContainer = () => {
-  const [todos, setTodos] = useState([]);
+  const getInitialTodos = () => {
+    // getting stored items
+    const temp = localStorage.getItem("todos")
+    const savedTodos = JSON.parse(temp)
+    return savedTodos || []
+  }
+  const [todos, setTodos] = useState(getInitialTodos);
 
   useEffect(() => {
     console.log("test run");
