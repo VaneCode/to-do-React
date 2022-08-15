@@ -1,9 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { FaPlusCircle } from "react-icons/fa";
 
 const InputToDo = (props) => {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
 
   const onChange = (e) => {
     setTitle(e.target.value);
@@ -13,9 +14,9 @@ const InputToDo = (props) => {
     e.preventDefault();
     if (title.trim()) {
       props.addTodoProps(title);
-      setTitle('');
+      setTitle("");
     } else {
-      alert('Please write item');
+      alert("Please write item");
     }
   };
 
@@ -29,7 +30,10 @@ const InputToDo = (props) => {
         name="title"
         onChange={onChange}
       />
-      <button className="input-submit" type="button">Submit</button>
+      <button className="input-submit" type="button">
+        {" "}
+        <FaPlusCircle />
+      </button>
     </form>
   );
 };
