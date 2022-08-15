@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './ToDoItem.module.css';
 
 class ToDoItem extends React.Component {
@@ -75,21 +75,5 @@ class ToDoItem extends React.Component {
     );
   }
 }
-
-ToDoItem.propTypes = {
-  completed: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  todo: PropTypes.objectOf(PropTypes.object()).isRequired,
-  handleChangeProps: PropTypes.func,
-  deleteTodoProps: PropTypes.func,
-  setUpdate: PropTypes.func,
-};
-
-ToDoItem.defaultProps = {
-  handleChangeProps: null,
-  deleteTodoProps: null,
-  setUpdate: null,
-};
 
 export default ToDoItem;
