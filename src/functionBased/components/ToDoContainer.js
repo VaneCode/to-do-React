@@ -1,38 +1,17 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint no-param-reassign: "error" */
-import React from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Header from './Header';
 import InputToDo from './InputToDo';
 import ToDoList from './ToDoList';
 
-class ToDoContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: [],
-    };
-  }
+const ToDoContainer = () =>{
 
-  componentDidMount() {
-    const temp = localStorage.getItem('todos');
-    const loadedTodos = JSON.parse(temp);
-    if (loadedTodos) {
-      this.setState({
-        todos: loadedTodos,
-      });
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.todos !== this.state.todos) {
-      const temp = JSON.stringify(this.state.todos);
-      localStorage.setItem('todos', temp);
-    }
-  }
-
-  handleChange = (id) => {
-    this.setState((prevState) => ({
+  const[todos, setState] = useState([]);
+ 
+  const handleChange = (id) => {
+    setState((prevState) => ({
       todos: prevState.todos.map((todo) => {
         if (todo.id === id) {
           return {
@@ -45,25 +24,25 @@ class ToDoContainer extends React.Component {
     }));
   };
 
-  delTodo = (id) => {
-    this.setState((previousState) => ({
+  const delTodo = (id) => {
+    setState((previousState) => ({
       todos: [...previousState.todos.filter((todo) => todo.id !== id)],
     }));
   };
 
-  addTodoItem = (title) => {
+  const addTodoItem = (title) => {
     const newTodo = {
       id: uuidv4(),
       title,
       completed: false,
     };
-    this.setState((previousState) => ({
+    setState((previousState) => ({
       todos: [...previousState.todos, newTodo],
     }));
   };
 
-  setUpdate = (updatedTitle, id) => {
-    this.setState((previousState) => ({
+  const setUpdate = (updatedTitle, id) => {
+    setState((previousState) => ({
       todos: previousState.todos.map((todo) => {
         if (todo.id === id) {
           todo.title = updatedTitle;
@@ -73,21 +52,19 @@ class ToDoContainer extends React.Component {
     }));
   };
 
-  render() {
     return (
       <div className="container">
         <div className="inner">
           <Header />
-          <InputToDo addTodoProps={this.addTodoItem} />
+          <InputToDo addTodoProps={addTodoItem} />
           <ToDoList
-            todos={this.state.todos}
-            handleChangeProps={this.handleChange}
-            deleteTodoProps={this.delTodo}
-            setUpdate={this.setUpdate}
+            todos={todos}
+            handleChangeProps={handleChange}
+            deleteTodoProps={delTodo}
+            setUpdate={setUpdate}
           />
         </div>
       </div>
     );
-  }
 }
 export default ToDoContainer;
