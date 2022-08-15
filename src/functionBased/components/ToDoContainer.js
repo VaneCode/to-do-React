@@ -1,17 +1,28 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint no-param-reassign: "error" */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Header from './Header';
 import InputToDo from './InputToDo';
 import ToDoList from './ToDoList';
 
-const ToDoContainer = () =>{
+const ToDoContainer = () => {
+  const [todos, setTodos] = useState([]);
 
-  const[todos, setState] = useState([]);
- 
+  useEffect(() => {
+    console.log('test run');
+
+    // getting stored items
+    const temp = localStorage.getItem('todos');
+    const loadedTodos = JSON.parse(temp);
+
+    if (loadedTodos) {
+      setTodos(loadedTodos);
+    }
+  }, [setTodos]);
+
   const handleChange = (id) => {
-    setState((prevState) => ({
+    setTodos((prevState) => ({
       todos: prevState.todos.map((todo) => {
         if (todo.id === id) {
           return {
@@ -25,7 +36,7 @@ const ToDoContainer = () =>{
   };
 
   const delTodo = (id) => {
-    setState((previousState) => ({
+    setTodos((previousState) => ({
       todos: [...previousState.todos.filter((todo) => todo.id !== id)],
     }));
   };
@@ -36,13 +47,11 @@ const ToDoContainer = () =>{
       title,
       completed: false,
     };
-    setState((previousState) => ({
-      todos: [...previousState.todos, newTodo],
-    }));
+    setTodos([...todos, newTodo]);
   };
 
   const setUpdate = (updatedTitle, id) => {
-    setState((previousState) => ({
+    setTodos((previousState) => ({
       todos: previousState.todos.map((todo) => {
         if (todo.id === id) {
           todo.title = updatedTitle;
@@ -52,19 +61,19 @@ const ToDoContainer = () =>{
     }));
   };
 
-    return (
-      <div className="container">
-        <div className="inner">
-          <Header />
-          <InputToDo addTodoProps={addTodoItem} />
-          <ToDoList
-            todos={todos}
-            handleChangeProps={handleChange}
-            deleteTodoProps={delTodo}
-            setUpdate={setUpdate}
-          />
-        </div>
+  return (
+    <div className="container">
+      <div className="inner">
+        <Header />
+        <InputToDo addTodoProps={addTodoItem} />
+        <ToDoList
+          todos={todos}
+          handleChangeProps={handleChange}
+          deleteTodoProps={delTodo}
+          setUpdate={setUpdate}
+        />
       </div>
-    );
-}
+    </div>
+  );
+};
 export default ToDoContainer;
