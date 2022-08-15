@@ -52,7 +52,7 @@ const ToDoItem = (props) => {
           onChange={() => props.handleChangeProps(id)}
         />
         <button type="button" onClick={() => props.deleteTodoProps(id)}>
-          <FaTrash />
+          <FaTrash style={{ color: "orangered", fontSize: "16px" }} />
         </button>
         <span style={props.todo.completed ? completedStyle : null}>
           {title}
