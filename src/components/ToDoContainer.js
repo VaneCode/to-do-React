@@ -1,15 +1,21 @@
-import React from "react";
-import { v4 as uuidv4 } from "uuid";
-import Header from "./Header";
-import InputToDo from "./InputToDo";
-import ToDoList from "./ToDoList";
+/* eslint-disable react/destructuring-assignment */
+/* eslint no-param-reassign: "error" */
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import Header from './Header';
+import InputToDo from './InputToDo';
+import ToDoList from './ToDoList';
+
 class ToDoContainer extends React.Component {
-  state = {
-    todos: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      todos: [],
+    };
+  }
 
   componentDidMount() {
-    const temp = localStorage.getItem("todos");
+    const temp = localStorage.getItem('todos');
     const loadedTodos = JSON.parse(temp);
     if (loadedTodos) {
       this.setState({
@@ -21,7 +27,7 @@ class ToDoContainer extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.todos !== this.state.todos) {
       const temp = JSON.stringify(this.state.todos);
-      localStorage.setItem("todos", temp);
+      localStorage.setItem('todos', temp);
     }
   }
 
@@ -40,35 +46,31 @@ class ToDoContainer extends React.Component {
   };
 
   delTodo = (id) => {
-    this.setState({
-      todos: [
-        ...this.state.todos.filter((todo) => {
-          return todo.id !== id;
-        }),
-      ],
-    });
+    this.setState((previousState) => ({
+      todos: [...previousState.todos.filter((todo) => todo.id !== id)],
+    }));
   };
 
   addTodoItem = (title) => {
     const newTodo = {
       id: uuidv4(),
-      title: title,
+      title,
       completed: false,
     };
-    this.setState({
-      todos: [...this.state.todos, newTodo],
-    });
+    this.setState((previousState) => ({
+      todos: [...previousState.todos, newTodo],
+    }));
   };
 
   setUpdate = (updatedTitle, id) => {
-    this.setState({
-      todos: this.state.todos.map((todo) => {
+    this.setState((previousState) => ({
+      todos: previousState.todos.map((todo) => {
         if (todo.id === id) {
           todo.title = updatedTitle;
         }
         return todo;
       }),
-    });
+    }));
   };
 
   render() {

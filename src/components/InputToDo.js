@@ -1,9 +1,14 @@
-import React, { Component } from "react";
+/* eslint-disable react/destructuring-assignment */
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class InputToDo extends Component {
-  state = {
-    title: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+    };
+  }
 
   onChange = (e) => {
     this.setState({
@@ -16,7 +21,7 @@ class InputToDo extends Component {
     if (this.state.title.trim()) {
       this.props.addTodoProps(this.state.title);
       this.setState({
-        title: "",
+        title: '',
       });
     } else {
       alert("Please write the taks's title");
@@ -34,9 +39,18 @@ class InputToDo extends Component {
           name="title"
           onChange={this.onChange}
         />
-        <button className="input-submit">Submit</button>
+        <button className="input-submit" type="button">Submit</button>
       </form>
     );
   }
 }
+
+InputToDo.propTypes = {
+  addTodoProps: PropTypes.func,
+};
+
+InputToDo.defaultProps = {
+  addTodoProps: null,
+};
+
 export default InputToDo;
