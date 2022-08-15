@@ -1,49 +1,38 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-class InputToDo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: '',
-    };
-  }
+const InputToDo = (props) => {
+  const [title, setTitle] = useState('');
 
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+  const onChange = (e) => {
+    setTitle(e.target.value);
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.title.trim()) {
-      this.props.addTodoProps(this.state.title);
-      this.setState({
-        title: '',
-      });
+    if (title.trim()) {
+      props.addTodoProps(title);
+      setTitle('');
     } else {
-      alert("Please write the taks's title");
+      alert('Please write item');
     }
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit} className="form-container">
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Add todo..."
-          value={this.state.title}
-          name="title"
-          onChange={this.onChange}
-        />
-        <button className="input-submit" type="button">Submit</button>
-      </form>
-    );
-  }
-}
+  return (
+    <form onSubmit={handleSubmit} className="form-container">
+      <input
+        type="text"
+        className="input-text"
+        placeholder="Add todo..."
+        value={title}
+        name="title"
+        onChange={onChange}
+      />
+      <button className="input-submit" type="button">Submit</button>
+    </form>
+  );
+};
 
 InputToDo.propTypes = {
   addTodoProps: PropTypes.func,
