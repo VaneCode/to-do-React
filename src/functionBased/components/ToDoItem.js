@@ -1,11 +1,17 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ToDoItem.module.css";
 
 const ToDoItem = (props) => {
   const [editing, setEditing] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      console.log("Cleaning up...");
+    };
+  }, []);
 
   const handleEditing = () => {
     setEditing({
