@@ -35,6 +35,12 @@ const ToDoContainer = () => {
     );
   };
 
+  useEffect(() => {
+    // storing todos items
+    const temp = JSON.stringify(todos)
+    localStorage.setItem("todos", temp)
+  }, [todos])
+
   const delTodo = (id) => {
     setTodos([
       ...todos.filter((todo) => {
