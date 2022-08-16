@@ -1,17 +1,15 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
-import React, { useState, useEffect } from "react";
-import styles from "./ToDoItem.module.css";
-import { FaTrash } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { FaTrash } from 'react-icons/fa';
+import styles from './ToDoItem.module.css';
 
 const ToDoItem = (props) => {
   const [editing, setEditing] = useState(false);
 
-  useEffect(() => {
-    return () => {
-      console.log("Cleaning up...");
-    };
+  useEffect(() => () => {
+    console.log('Cleaning up...');
   }, []);
 
   const handleEditing = () => {
@@ -21,16 +19,16 @@ const ToDoItem = (props) => {
   };
 
   const handleUpdatedDone = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       setEditing({ editing: false });
     }
   };
 
   const completedStyle = {
-    fontStyle: "italic",
-    color: "#595959",
+    fontStyle: 'italic',
+    color: '#595959',
     opacity: 0.4,
-    textDecoration: "line-through",
+    textDecoration: 'line-through',
   };
   const { completed, id, title } = props.todo;
 
@@ -38,9 +36,9 @@ const ToDoItem = (props) => {
   const editMode = {};
 
   if (editing) {
-    viewMode.display = "none";
+    viewMode.display = 'none';
   } else {
-    editMode.display = "none";
+    editMode.display = 'none';
   }
   return (
     <li className={styles.item}>
@@ -52,7 +50,7 @@ const ToDoItem = (props) => {
           onChange={() => props.handleChangeProps(id)}
         />
         <button type="button" onClick={() => props.deleteTodoProps(id)}>
-          <FaTrash style={{ color: "orangered", fontSize: "16px" }} />
+          <FaTrash style={{ color: 'orangered', fontSize: '16px' }} />
         </button>
         <span style={props.todo.completed ? completedStyle : null}>
           {title}

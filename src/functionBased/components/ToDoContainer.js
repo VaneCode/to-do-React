@@ -1,25 +1,25 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint no-param-reassign: "error" */
-import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import Header from "./Header";
-import InputToDo from "./InputToDo";
-import ToDoList from "./ToDoList";
+import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import Header from './Header';
+import InputToDo from './InputToDo';
+import ToDoList from './ToDoList';
 
 const ToDoContainer = () => {
   const getInitialTodos = () => {
     // getting stored items
-    const temp = localStorage.getItem("todos")
-    const savedTodos = JSON.parse(temp)
-    return savedTodos || []
-  }
+    const temp = localStorage.getItem('todos');
+    const savedTodos = JSON.parse(temp);
+    return savedTodos || [];
+  };
   const [todos, setTodos] = useState(getInitialTodos);
 
   useEffect(() => {
-    console.log("test run");
+    console.log('test run');
 
     // getting stored items
-    const temp = localStorage.getItem("todos");
+    const temp = localStorage.getItem('todos');
     const loadedTodos = JSON.parse(temp);
 
     if (loadedTodos) {
@@ -28,37 +28,33 @@ const ToDoContainer = () => {
   }, [setTodos]);
 
   const handleChange = (id) => {
-    setTodos((prevState) =>
-      prevState.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            completed: !todo.completed,
-          };
-        }
-        return todo;
-      })
-    );
+    setTodos((prevState) => prevState.map((todo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          completed: !todo.completed,
+        };
+      }
+      return todo;
+    }));
   };
 
   useEffect(() => {
     // storing todos items
-    const temp = JSON.stringify(todos)
-    localStorage.setItem("todos", temp)
-  }, [todos])
+    const temp = JSON.stringify(todos);
+    localStorage.setItem('todos', temp);
+  }, [todos]);
 
   const delTodo = (id) => {
     setTodos([
-      ...todos.filter((todo) => {
-        return todo.id !== id;
-      }),
+      ...todos.filter((todo) => todo.id !== id),
     ]);
   };
 
   const addTodoItem = (title) => {
     const newTodo = {
       id: uuidv4(),
-      title: title,
+      title,
       completed: false,
     };
     setTodos([...todos, newTodo]);
@@ -71,7 +67,7 @@ const ToDoContainer = () => {
           todo.title = updatedTitle;
         }
         return todo;
-      })
+      }),
     );
   };
 
